@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        #menu {
+            height: 30px;
+            padding: 0;
+            margin: 0;
+            background-color: white;
+            border: 1px solid white;
+        }
+
+        #menu ul,
+        #menu li {
+            padding: 0;
+            margin: 0;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        #menu li {
+            position: relative;
+            float: left;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #menu li a {
+            width: 100px;
+            height: 30px;
+            display: block;
+            text-decoration: none;
+            text-align: center;
+            line-height: 30px;
+            background-color: white;
+            color: black;
+        }
+
+        #menu ul ul li a {
+            width: 200px;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        #menu li a:hover {
+            background-color: white;
+        }
+
+        #menu ul ul {
+            position: absolute;
+            top: 30px;
+            left: 15px;
+            visibility: hidden;
+        }
+
+        #menu ul li:hover ul {
+            visibility: visible;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #menu ul li ul :hover a {
+            color: blueviolet;
+            /* font-weight: 50px; */
+        }
+    </style>
+</head>
+<body>
+<div id="menu">
+    <ul>
+        <li><a th:href="@{/product/list}">List</a>
+        <li><a th:href="@{/product/add}">Add new</a>
+        <li></li>
+    </ul>
+</div>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Chọn</th>
+        <th scope="col">Tên sản phẩm</th>
+        <th scope="col">Giá bắt đầu</th>
+        <th scope="col">Loại Sản phẩm</th>
+        <th scope="col">Tính trạng</th>
+        <th scope="col">Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="p,status:${products}" th:object="${p}">
+            <td th:text="${status.index+1}"></td>
+            <td><input type="checkbox"></td>
+            <td th:text="*{name}"></td>
+            <td th:text="*{startPrice}"></td>
+            <td th:text="*{category.name}"></td>
+            <td th:text="*{status}"></td>
+            <td>
+                <a th:href="@{/product/edit(id=*{id})}">Edit</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div th:if="${products.totalPages > 1}">
+    <a th:each="pageNumber: ${pageNumbers}"
+       th:href="@{/products/list(page=${pageNumber}, size=${products.size})}"
+       th:text="${pageNumber}"
+       th:class="${pageNumber == products.number + 1} ? active"></a>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>

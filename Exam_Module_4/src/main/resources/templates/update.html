@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Product</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<form method="post" th:action="@{/product/edit}" th:object="${product}">
+  <input type="hidden"th:value="*{id}">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label>Tên sản phẩm</label>
+      <input type="text" th:field="*{name}" class="form-control">
+      <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label>Giá bắt đầu</label>
+      <input type="text" th:field="*{startPrice}" class="form-control">
+    </div>
+  </div>
+  <div class="form-row">
+    <label>Loại sản phẩm</label>
+    <div class="input-group mb-2">
+      <select th:field="*{category}" class="custom-select">
+        <option th:each="c : ${categories}" th:value="${c.id}"
+                th:text="${c.name}"></option>
+      </select>
+    </div>
+  </div>
+  <input type="submit" value="Thêm sản phẩm">
+</form>
+</body>
+</html>
